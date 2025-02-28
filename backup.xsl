@@ -49,10 +49,12 @@
 
     <xsl:template name="entry">
         <xsl:param name="title" />
+        <xsl:param name="id" />
         <xsl:param name="date" />
         <xsl:param name="draftClass" />
 
         <div class="entry">
+            <xsl:variable name="domesticDate" select="concat(substring($date, 9, 2), '.', substring($date, 6, 2), '.', substring($date, 1, 4), ' ', substring($date, 12, 2), ':', substring($date, 15, 2))" />
             <h3>
                 <a>
                     <xsl:attribute name="href">https://eksisozluk.com/?q=<xsl:value-of
@@ -71,7 +73,18 @@
                 </a>
                 <br />
                 <span title="entry tarihi">
-                    <xsl:value-of select="translate($date, 'T', ' ')" />
+                    <xsl:choose>
+                        <xsl:when test="$id">
+                            <a title="ekşi sözlük&#39;te gör" target="_blank">
+                                <xsl:attribute name="href">https://eksisozluk.com/entry/<xsl:value-of
+                                    select="$id" /></xsl:attribute>
+                                <xsl:value-of select="$domesticDate"/>
+                            </a>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$domesticDate"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </span>
             </div>
         </div>
@@ -80,6 +93,7 @@
     <xsl:template match="entry">
         <xsl:call-template name="entry">
             <xsl:with-param name="title" select="@title" />
+            <xsl:with-param name="id" select="@id" />
             <xsl:with-param name="date" select="@date" />
         </xsl:call-template>
     </xsl:template>
