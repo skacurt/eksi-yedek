@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
 <backup nick="ssg" backupdate="2023-03-10T22:37:44">
-  <entries count="51423">
+  <entries count="51423">    
     <entry title="pena" id="1" date="1999-02-15T00:00:00">gitar calmak icin kullanilan minik plastik garip nesne.</entry>
+    <entry title="url test" id="9999" date="1999-02-15T00:00:00">duydum ki unutmuşsun:
+
+1) [https://example.com/path?query-string#fragment gözlerimin rengini]
+2) https://example.com/path?query-string#fragemnt gözlerimin rengini            
+    </entry>
     <entry title="amiga" id="2" date="1999-02-15T00:00:00">ispanyolca'da "kiz arkada$".</entry>
     <entry title="amiga" id="3" date="1999-02-15T00:00:00">1984-1993 arasi ortaligi kasip kavurmu$ bilgisayar fenomeni. piyasaya ciktigi yila gore cok ileride bir bilgisayar olan amiga commodore'un hatali pazarlama stratejilerinin kurbani olmu$ yitip gitmi$tir. hala amiga ya$iyor hede hodo diyenler de bizden degildir.</entry>
     <entry title="sour times" id="4" date="1999-02-15T00:00:00">portishead'in me$hur bir parcasi.</entry>
