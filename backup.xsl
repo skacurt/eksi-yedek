@@ -47,6 +47,13 @@
         </a>)</sup>
     </xsl:template>
 
+    <xsl:template match="a">
+        <a>
+            <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
+            <xsl:value-of select="." />
+        </a>
+    </xsl:template>
+    
     <xsl:template name="entry">
         <xsl:param name="title" />
         <xsl:param name="id" />
