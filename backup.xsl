@@ -48,7 +48,7 @@
     </xsl:template>
 
     <xsl:template match="a">
-        <a>
+        <a target="_blank">
             <xsl:attribute name="href"><xsl:value-of select="@href" /></xsl:attribute>
             <xsl:value-of select="." />
         </a>
