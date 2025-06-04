@@ -4,12 +4,10 @@
     "@xmldom/xmldom": "^0.9.8",
     "chai": "^5.1.1",
     "mocha": "^10.7.3",
-    "peggy": "^4.0.3",
-    "xslt-processor": "^3.3.1"
+    "peggy": "^4.0.3"
   },
   "scripts": {
-    "test": "mocha",
-    "build": "peggy --format es -o eksitext-2024.mjs eksitext-2024.peggy",
-    "serve": "npx serve -p 5000"
+    "test": "mocha test/**/*.test.mjs",
+    "test:debug": "mocha --inspect-brk test/**/*.test.mjs"
   }
 }
