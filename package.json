@@ -2,12 +2,11 @@
   "type": "module",
   "devDependencies": {
     "@xmldom/xmldom": "^0.9.8",
-    "chai": "^5.1.1",
-    "mocha": "^10.7.3",
-    "peggy": "^4.0.3"
-  },
-  "scripts": {
-    "test": "mocha test/**/*.test.mjs",
-    "test:debug": "mocha --inspect-brk test/**/*.test.mjs"
+    "peggy": "^4.0.3",
+    "vitest": "^3.2.1"
+  },  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:watch": "vitest --watch"
   }
 }
