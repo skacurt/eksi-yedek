@@ -17,7 +17,8 @@ kullanmak için: [kod.ssg.dev/eksi-yedek](https://kod.ssg.dev/eksi-yedek)
   - [X] parsing
 - [X] entry metinlerindeki linklerin doğru gösterimi
 - [ ] sol frame
-- [X] örf ve adetlerimize uygun tarih gösterimi 
+- [X] örf ve adetlerimize uygun tarih gösterimi
+- [ ] doğrudan diskten çalışma desteği (index.html'e çift klikle)
 
 # lisans
 
