@@ -10,6 +10,7 @@ kullanmak için: [kod.ssg.dev/eksi-yedek](https://kod.ssg.dev/eksi-yedek)
 
 - [X] PWA
 - [X] mobil cihazlarda sürükle bırak alternatifi dosya yükleme
+  - [ ] bu buton olsa daha iyi
 - [ ] arama
 - [ ] "başka yedeğe bak" butonu
 - [ ] testler
