@@ -3,8 +3,9 @@
   "devDependencies": {
     "@xmldom/xmldom": "^0.9.8",
     "peggy": "^4.0.3",
-    "vitest": "^3.2.1"
-  },  "scripts": {
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
     "test": "vitest",
     "test:run": "vitest run",
     "test:watch": "vitest --watch"
