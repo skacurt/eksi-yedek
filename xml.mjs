@@ -1,6 +1,7 @@
-import { gi } from "./generic.mjs";
 import { parse } from "./eksitext-2024.mjs";
-
+export function gi(id) {
+    return document.getElementById(id);
+}
 const xmlMimeType = "text/xml";
 
 /**
@@ -25,100 +26,65 @@ function getNodes(xml, xpath) {
  * parse the given XML backup text with markup, make it
  * displayable, and finally display its contents.
  * @param {string} xmlBody xml body
+ * @param {Function} renderCallback callback function to render the backup data
  */
-function displayXml(xmlBody) {
+function displayXml(xmlBody, renderCallback) {
     const parser = new DOMParser();
     const xml = parser.parseFromString(xmlBody, xmlMimeType);
 
-    let nodes = getNodes(xml, "//*[self::entry or self::draft]");
-    nodes.forEach(node => {     
-        let newNode = processEksiMarkup(xml, node);
-        node.parentNode.replaceChild(newNode, node);
+    const backupNode = xml.documentElement;
+    const nick = backupNode.getAttribute('nick');
+    const backupDate = new Date(backupNode.getAttribute('backupdate'));
+
+    // Process entries
+    const entryNodes = getNodes(xml, "//entry");
+    const entries = entryNodes.map(node => {
+        const parsedContent = parseEksiMarkup(node.textContent);
+        return {
+            title: node.getAttribute('title'),
+            id: node.getAttribute('id'),
+            date: new Date(node.getAttribute('date')),
+            parsedContent
+        };
     });
 
-    fetch("backup.xsl")
-        .then(response => response.text())
-        .then(str => parser.parseFromString(str, xmlMimeType))
-        .then(xslStr => {
-            const processor = new XSLTProcessor();
-            processor.importStylesheet(xslStr);
-            const result = processor.transformToFragment(xml, document);
-            gi("dropzone").classList.remove("expanded");
-            gi("dropzone").classList.add("mini");
-            gi("content").replaceChildren(result);
-        })
+    // Process drafts
+    const draftNodes = getNodes(xml, "//draft");
+    const drafts = draftNodes.map(node => {
+        const parsedContent = parseEksiMarkup(node.textContent);
+        return {
+            title: node.getAttribute('title'),
+            date: new Date(node.getAttribute('date')),
+            parsedContent
+        };
+    });
+
+    const backupData = {
+        nick,
+        backupDate,
+        entries,
+        drafts
+    };
+
+    gi("dropzone").classList.remove("expanded");
+    gi("dropzone").classList.add("mini");
+    
+    renderCallback(backupData);
 }
 
 /**
- * converts eksi markup into proper XML so it can be parsed
- * by the XSLT.
- * @param {XMLDocument} xml XML document
- * @param {Element} node Node to be processed
- * @returns {Element} newly processed node 
+ * parses eksi markup text into structured data
+ * @param {string} text text content to parse
+ * @returns {Array} parsed content array
  */
-function processEksiMarkup(xml, node) {
-    let parsed;
+function parseEksiMarkup(text) {
     try {
-        parsed = parse(node.textContent);
+        return parse(text);
     }
-    catch {
-        let serializer = new XMLSerializer();
-        const str = serializer.serializeToString(node);
-        console.error("couldn't parse entry node: %s", str);
-        return node;
+    catch (err) {
+        console.error("couldn't parse entry text: %s", text, err);
+        return [text]; // return as plain text if parsing fails
     }
-    let newNode = node.cloneNode();
-    newNode.replaceChildren(); // remove all nodes
-    parsed.forEach(part => {
-        if (typeof part === "string") {
-            newNode.appendChild(xml.createTextNode(part));
-            return;
-        }
-        let subNode;
-        switch(part.type) {
-            case "gbkz": {
-                subNode = xml.createElement("gbkz");
-                subNode.textContent = part.query;
-                break;
-            }
-            case "bkz": {
-                subNode = xml.createElement("bkz");
-                subNode.textContent = part.query;
-                break;
-            }
-            case "abkz": {
-                subNode = xml.createElement("abkz");
-                subNode.textContent = part.text;
-                subNode.setAttribute("query", part.query);
-                break;
-            }
-            case "paragraph_break": {
-                subNode = xml.createElement("p");
-                break;
-            }
-            case "line_break": {
-                subNode = xml.createElement("br");
-                break;
-            }
-            case "url": {
-                subNode = xml.createElement("a");
-                subNode.setAttribute("href", part.url);
-                subNode.textContent = part.url;
-                break;
-            }
-            case "named_url": {
-                subNode = xml.createElement("a");
-                subNode.setAttribute("href", part.url);
-                subNode.textContent = part.title;
-                break;
-            }
-            default:
-                console.error("unknown part type %s", part.type);
-                return;
-        }
-        newNode.appendChild(subNode);
-    });
-    return newNode;
 }
 
 export { displayXml };

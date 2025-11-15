@@ -10,37 +10,11 @@
     <link rel="manifest" href="app.webmanifest" />
     <link rel="icon" type="image/svg+xml" href="img/icon.svg" />
     <link rel="apple-touch-icon" href="img/ios/1024.png" sizes="1024x1024">
-
-    <script src="lib/jszip.min.js"></script>
-    <script type="module" src="./index.mjs"></script>
 </head>
 
 <body>
-    <header>
-        <h1>ekşi sözlük</h1>
-        <h2>yedek okuyucu şeysi - v0.4.0 beta</h2>
-    </header>
-    <label id="dropzone" class="dropzone expanded" for="fileinput">
-        <div id="instruction">
-            sözlük yedek ZIP ya da XML dosyanızı bu alana sürükleyip bırakın.
-            olmadı buralara bi yerlere dokunun.
-            <input id="fileinput" type="file">
-            <br /><br />
-        </div>
-        <div id="error"></div>
-    </label>
-    <div id="content"></div>
-    <footer id="footer">
-        <a href="https://github.com/ssg">ssg</a> · <a href="https://github.com/ssg/eksi-yedek">kaynak kodu</a>
-        <br />
-        <br />
-        <small>(verileriniz tamamen kendi tarayıcınızda, istemci tarafında el değmeden işlenmektedir.
-            herhangi bir yere aktarılmamaktadır. doğrudan bilgisayarınızda çalıştırmak için tarayıcı
-            adres satırındaki "uygulamayı kur" seçeneğini kullanabilirsiniz. her şeyi düşündük olm her şeyi)</small>
-        <br/>
-        <br/>
-        <small>© 2024-2025</small>
-    </footer>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
 </body>
 
 </html>
