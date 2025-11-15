@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { displayXml } from '../xml.mjs';
 import { BackupReader } from './components/BackupReader';
 import { DropZone } from './components/DropZone';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 export function App() {
     const [backupData, setBackupData] = useState(null);
@@ -27,9 +28,13 @@ export function App() {
                 <h1>ekşi sözlük</h1>
                 <h2>yedek okuyucu şeysi - v0.5.0 beta</h2>
             </header>
-            <DropZone id="dropzone" onFileProcessed={handleFileProcessed} isMini={backupData !== null} />
+            <ErrorBoundary>
+                <DropZone id="dropzone" onFileProcessed={handleFileProcessed} isMini={backupData !== null} />
+            </ErrorBoundary>
             <div id="content">
-                <BackupReader backupData={backupData} />
+                <ErrorBoundary>
+                    <BackupReader backupData={backupData} />
+                </ErrorBoundary>
             </div>
             <footer id="footer">
                 <a href="https://github.com/ssg">ssg</a> · <a href="https://github.com/ssg/eksi-yedek">kaynak kodu</a>
