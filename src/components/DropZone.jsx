@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { processFiles } from '../utils/backupfile.mjs';
 
-export function DropZone({ id, onFileProcessed }) {
+export function DropZone({ id, onFileProcessed, isMini }) {
     const [isActive, setIsActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const fileInputRef = useRef(null);
@@ -45,7 +45,7 @@ export function DropZone({ id, onFileProcessed }) {
         <>
             <label 
                 id={id} 
-                className={`dropzone expanded ${isActive ? 'active' : ''}`}
+                className={`dropzone ${isMini ? 'mini' : 'expanded'} ${isActive ? 'active' : ''}`}
                 htmlFor="fileinput"
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}

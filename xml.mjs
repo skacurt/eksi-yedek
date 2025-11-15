@@ -1,7 +1,5 @@
 import { parse } from "./eksitext-2024.mjs";
-export function gi(id) {
-    return document.getElementById(id);
-}
+
 const xmlMimeType = "text/xml";
 
 /**
@@ -65,9 +63,6 @@ function displayXml(xmlBody, renderCallback) {
         entries,
         drafts
     };
-
-    gi("dropzone").classList.remove("expanded");
-    gi("dropzone").classList.add("mini");
     
     renderCallback(backupData);
 }

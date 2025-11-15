@@ -27,7 +27,7 @@ export function App() {
                 <h1>ekşi sözlük</h1>
                 <h2>yedek okuyucu şeysi - v0.5.0 beta</h2>
             </header>
-            <DropZone id="dropzone" onFileProcessed={handleFileProcessed} />
+            <DropZone id="dropzone" onFileProcessed={handleFileProcessed} isMini={backupData !== null} />
             <div id="content">
                 <BackupReader backupData={backupData} />
             </div>
