@@ -3,6 +3,7 @@ import { displayXml } from '../xml.mjs';
 import { BackupReader } from './components/BackupReader';
 import { DropZone } from './components/DropZone';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { version } from '../package.json';
 
 export function App() {
     const [backupData, setBackupData] = useState<any>(null);
@@ -26,7 +27,7 @@ export function App() {
         <>
             <header>
                 <h1>ekşi sözlük</h1>
-                <h2>yedek okuyucu şeysi - v0.5.0 beta</h2>
+                <h2>yedek okuyucu şeysi - v{version}</h2>
             </header>
             <ErrorBoundary>
                 <DropZone id="dropzone" onFileProcessed={handleFileProcessed} isMini={backupData !== null} />
