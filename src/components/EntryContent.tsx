@@ -1,6 +1,18 @@
 import React from 'react';
 
-export function EntryContent({ parts }) {
+type ContentPart = string | string[] | {
+    type: 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url';
+    query?: string;
+    text?: string;
+    url?: string;
+    title?: string;
+};
+
+interface EntryContentProps {
+    parts: ContentPart[];
+}
+
+export function EntryContent({ parts }: EntryContentProps) {
     return (
         <>
             {parts.map((part, index) => {
@@ -16,7 +28,7 @@ export function EntryContent({ parts }) {
                 switch (part.type) {
                     case 'gbkz':
                         return (
-                            <a key={index} href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query)}`}>
+                            <a key={index} href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
                                 {part.query}
                             </a>
                         );
@@ -24,7 +36,7 @@ export function EntryContent({ parts }) {
                     case 'bkz':
                         return (
                             <React.Fragment key={index}>
-                                (bkz: <a href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query)}`}>
+                                (bkz: <a href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
                                     {part.query}
                                 </a>)
                             </React.Fragment>
@@ -34,7 +46,7 @@ export function EntryContent({ parts }) {
                         return (
                             <React.Fragment key={index}>
                                 {part.text}
-                                <sup>(<a href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query)}`}>
+                                <sup>(<a href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
                                     {part.query}
                                 </a>)</sup>
                             </React.Fragment>
@@ -52,20 +64,20 @@ export function EntryContent({ parts }) {
                     
                     case 'url':
                         return (
-                            <a key={index} href={encodeURI(part.url)} target="_blank" rel="noopener noreferrer">
+                            <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
                                 {part.url}
                             </a>
                         );
                     
                     case 'named_url':
                         return (
-                            <a key={index} href={encodeURI(part.url)} target="_blank" rel="noopener noreferrer">
+                            <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
                                 {part.title}
                             </a>
                         );
                     
                     default:
-                        console.error('unknown part type', part.type);
+                        console.error('unknown part type', (part as any).type);
                         return null;
                 }
             })}

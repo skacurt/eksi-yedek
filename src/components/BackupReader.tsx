@@ -2,7 +2,25 @@ import { BackupHeader } from './BackupHeader';
 import { Entry } from './Entry';
 import { DraftsSection } from './DraftsSection';
 
-export function BackupReader({ backupData }) {
+interface BackupEntry {
+    title: string;
+    id: number;
+    date: Date;
+    parsedContent: any[];
+}
+
+interface BackupData {
+    nick: string;
+    backupDate: Date;
+    entries?: BackupEntry[];
+    drafts?: any[];
+}
+
+interface BackupReaderProps {
+    backupData: BackupData | null;
+}
+
+export function BackupReader({ backupData }: BackupReaderProps) {
     if (!backupData) {
         return null;
     }

@@ -1,6 +1,17 @@
 import { Entry } from './Entry';
 
-export function DraftsSection({ drafts, nick }) {
+interface Draft {
+    title: string;
+    date: Date;
+    parsedContent: any[];
+}
+
+interface DraftsSectionProps {
+    drafts?: Draft[];
+    nick: string;
+}
+
+export function DraftsSection({ drafts, nick }: DraftsSectionProps) {
     if (!drafts || drafts.length === 0) {
         return null;
     }

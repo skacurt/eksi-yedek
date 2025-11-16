@@ -5,9 +5,9 @@ import { DropZone } from './components/DropZone';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
 export function App() {
-    const [backupData, setBackupData] = useState(null);
+    const [backupData, setBackupData] = useState<any>(null);
 
-    const handleFileProcessed = (xmlBody) => {
+    const handleFileProcessed = (xmlBody: string) => {
         displayXml(xmlBody, setBackupData);
     };
 

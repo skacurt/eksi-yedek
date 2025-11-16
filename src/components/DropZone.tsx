@@ -1,18 +1,24 @@
 import { useState, useRef } from 'react';
 import { processFiles } from '../utils/backupfile.mjs';
 
-export function DropZone({ id, onFileProcessed, isMini }) {
+interface DropZoneProps {
+    id: string;
+    onFileProcessed: (xmlBody: string) => void;
+    isMini: boolean;
+}
+
+export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
     const [isActive, setIsActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const fileInputRef = useRef(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const showError = (message) => {
+    const showError = (message: string) => {
         setErrorMessage(`⚠️ ${message}`);
         setTimeout(() => setIsActive(false), 500);
         console.debug("showing error: %s", message);
     };
 
-    const handleDrop = (ev) => {
+    const handleDrop = (ev: React.DragEvent<HTMLLabelElement>) => {
         console.debug("drop");
         ev.preventDefault();
         setIsActive(true);
@@ -23,22 +29,24 @@ export function DropZone({ id, onFileProcessed, isMini }) {
         }
     };
 
-    const handleDragOver = (ev) => {
+    const handleDragOver = (ev: React.DragEvent<HTMLLabelElement>) => {
         ev.preventDefault();
     };
 
-    const handleDragEnter = (ev) => {
+    const handleDragEnter = (ev: React.DragEvent<HTMLLabelElement>) => {
         console.debug("dragenter");
         setIsActive(true);
     };
 
-    const handleDragLeave = (ev) => {
+    const handleDragLeave = (ev: React.DragEvent<HTMLLabelElement>) => {
         console.debug("dragleave");
         setIsActive(false);
     };
 
-    const handleFileInputChange = (ev) => {
-        processFiles(ev.target.files, onFileProcessed, showError);
+    const handleFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+        if (ev.target.files) {
+            processFiles(ev.target.files, onFileProcessed, showError);
+        }
     };
 
     return (

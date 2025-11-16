@@ -1,4 +1,8 @@
-export function EntryDate({ date }) {
+interface EntryDateProps {
+    date: Date
+}
+
+export function EntryDate({ date }: EntryDateProps) {
     return date.toLocaleString('tr-TR', {
         day: '2-digit',
         month: '2-digit',

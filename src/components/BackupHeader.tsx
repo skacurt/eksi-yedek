@@ -1,7 +1,12 @@
 import React from 'react';
 import { EntryDate } from './EntryDate';
 
-export function BackupHeader({ nick, backupDate }) {
+interface BackupHeaderProps {
+    nick: string;
+    backupDate: Date;
+}
+
+export function BackupHeader({ nick, backupDate }: BackupHeaderProps) {
     return (
         <>
             <h2 className="backup-owner">{nick}</h2>

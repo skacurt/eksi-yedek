@@ -2,7 +2,16 @@ import React from 'react';
 import { EntryContent } from './EntryContent';
 import { EntryDate } from './EntryDate';
 
-export function Entry({ title, id, date, nick, parsedContent, isDraft = false }) {
+interface EntryProps {
+    title: string;
+    id?: number;
+    date: Date;
+    nick: string;
+    parsedContent: any[];
+    isDraft?: boolean;
+}
+
+export function Entry({ title, id, date, nick, parsedContent, isDraft = false }: EntryProps) {
     return (
         <div className="entry">
             <h3>
