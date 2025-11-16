@@ -1,33 +1,33 @@
-import { parse } from "./eksitext-2024.mjs";
+import { parse } from "./eksitext-2024.mjs"
 
-const xmlMimeType = "text/xml";
+const xmlMimeType = "text/xml"
 
 export interface ParsedContent {
-    type: string;
-    [key: string]: any;
+    type: string
+    [key: string]: any
 }
 
 export interface BackupEntry {
-    title: string;
-    id: number;
-    date: Date;
-    parsedContent: ParsedContent[];
+    title: string
+    id: number
+    date: Date
+    parsedContent: ParsedContent[]
 }
 
 export interface BackupDraft {
-    title: string;
-    date: Date;
-    parsedContent: ParsedContent[];
+    title: string
+    date: Date
+    parsedContent: ParsedContent[]
 }
 
 export interface BackupData {
-    nick: string;
-    backupDate: Date;
-    entries: BackupEntry[];
-    drafts: BackupDraft[];
+    nick: string
+    backupDate: Date
+    entries: BackupEntry[]
+    drafts: BackupDraft[]
 }
 
-export type RenderCallback = (backupData: BackupData) => void;
+export type RenderCallback = (backupData: BackupData) => void
 
 /**
  * collect a list of nodes from the xml document based on given xpath
@@ -36,15 +36,15 @@ export type RenderCallback = (backupData: BackupData) => void;
  * @returns node array
  */
 function getNodes(xml: XMLDocument, xpath: string): Node[] {
-    const result = xml.evaluate(xpath, xml.documentElement);
-    let node: Node | null;
-    const nodes: Node[] = [];
+    const result = xml.evaluate(xpath, xml.documentElement)
+    let node: Node | null
+    const nodes: Node[] = []
     while ((node = result.iterateNext())) {
         // we collect nodes beforehand because modifying
         // DOM invalidates search results
-        nodes.push(node);
+        nodes.push(node)
     }
-    return nodes;
+    return nodes
 }
 
 /**
@@ -54,46 +54,48 @@ function getNodes(xml: XMLDocument, xpath: string): Node[] {
  * @param renderCallback callback function to render the backup data
  */
 export function displayXml(xmlBody: string, renderCallback: RenderCallback): void {
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(xmlBody, xmlMimeType);
+    const parser = new DOMParser()
+    const xml = parser.parseFromString(xmlBody, xmlMimeType)
 
-    const backupNode = xml.documentElement;
-    const nick = backupNode.getAttribute('nick') || '';
-    const backupDate = new Date(backupNode.getAttribute('backupdate') || '');
+    const backupNode = xml.documentElement
+    const nick = backupNode.getAttribute('nick')!
+    const backupDate = new Date(backupNode.getAttribute('backupdate')!)
 
     // Process entries
-    const entryNodes = getNodes(xml, "//entry");
+    const entryNodes = getNodes(xml, "//entry")
     const entries: BackupEntry[] = entryNodes.map(node => {
-        const element = node as Element;
-        const parsedContent = parseEksiMarkup(element.textContent || '');
+        const element = node as Element
+        const parsedContent = parseEksiMarkup(element.textContent!)
         return {
-            title: element.getAttribute('title') || '',
+            title: element.getAttribute('title')!,
             id: Number(element.getAttribute('id')),
-            date: new Date(element.getAttribute('date') || ''),
+            date: new Date(element.getAttribute('date')!),
             parsedContent
-        };
-    });
+        }
+    })
 
     // Process drafts
-    const draftNodes = getNodes(xml, "//draft");
+    const draftNodes = getNodes(xml, "//draft")
     const drafts: BackupDraft[] = draftNodes.map(node => {
-        const element = node as Element;
-        const parsedContent = parseEksiMarkup(element.textContent || '');
+        const element = node as Element
+        const parsedContent = parseEksiMarkup(element.textContent!)
+        const dateStr = element.getAttribute('date')!
+        const title = element.getAttribute('title')!
         return {
-            title: element.getAttribute('title') || '',
-            date: new Date(element.getAttribute('date') || ''),
+            title: title,
+            date: new Date(dateStr),
             parsedContent
-        };
-    });
+        }
+    })
 
     const backupData: BackupData = {
         nick,
         backupDate,
         entries,
         drafts
-    };
+    }
     
-    renderCallback(backupData);
+    renderCallback(backupData)
 }
 
 /**
@@ -103,10 +105,10 @@ export function displayXml(xmlBody: string, renderCallback: RenderCallback): voi
  */
 function parseEksiMarkup(text: string): ParsedContent[] {
     try {
-        return parse(text) as ParsedContent[];
+        return parse(text) as ParsedContent[]
     }
     catch (err) {
-        console.error("couldn't parse entry text: %s", text, err);
-        return [{ type: 'text', content: text }]; // return as plain text if parsing fails
+        console.error("couldn't parse entry text: %s", text, err)
+        return [{ type: 'text', content: text }] // return as plain text if parsing fails
     }
 }
