@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
 type ContentPart = string | string[] | {
-    type: 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url';
-    query?: string;
-    text?: string;
-    url?: string;
-    title?: string;
-};
+    type: 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url'
+    query?: string
+    text?: string
+    url?: string
+    title?: string
+}
 
 interface EntryContentProps {
-    parts: ContentPart[];
+    parts: ContentPart[]
 }
 
 export function EntryContent({ parts }: EntryContentProps) {
@@ -17,12 +17,12 @@ export function EntryContent({ parts }: EntryContentProps) {
         <>
             {parts.map((part, index) => {
                 if (typeof part === 'string') {
-                    return <React.Fragment key={index}>{part}</React.Fragment>;
+                    return <React.Fragment key={index}>{part}</React.Fragment>
                 }
                 
                 // Handle array format from named_url parser (returns array, not object)
                 if (Array.isArray(part)) {
-                    return <React.Fragment key={index}>{part.join('')}</React.Fragment>;
+                    return <React.Fragment key={index}>{part.join('')}</React.Fragment>
                 }
 
                 switch (part.type) {
@@ -31,7 +31,7 @@ export function EntryContent({ parts }: EntryContentProps) {
                             <a key={index} href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
                                 {part.query}
                             </a>
-                        );
+                        )
                     
                     case 'bkz':
                         return (
@@ -40,7 +40,7 @@ export function EntryContent({ parts }: EntryContentProps) {
                                     {part.query}
                                 </a>)
                             </React.Fragment>
-                        );
+                        )
                     
                     case 'abkz':
                         return (
@@ -50,37 +50,37 @@ export function EntryContent({ parts }: EntryContentProps) {
                                     {part.query}
                                 </a>)</sup>
                             </React.Fragment>
-                        );
+                        )
                     
                     case 'paragraph_break':
                         return (
                             <React.Fragment key={index}>
                                 <br /><br />
                             </React.Fragment>
-                        );
+                        )
                     
                     case 'line_break':
-                        return <br key={index} />;
+                        return <br key={index} />
                     
                     case 'url':
                         return (
                             <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
                                 {part.url}
                             </a>
-                        );
+                        )
                     
                     case 'named_url':
                         return (
                             <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
                                 {part.title}
                             </a>
-                        );
+                        )
                     
                     default:
-                        console.error('unknown part type', (part as any).type);
-                        return null;
+                        console.error('unknown part type', (part as any).type)
+                        return null
                 }
             })}
         </>
-    );
+    )
 }

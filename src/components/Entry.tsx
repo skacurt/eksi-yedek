@@ -1,14 +1,14 @@
-import React from 'react';
-import { EntryContent } from './EntryContent';
-import { EntryDate } from './EntryDate';
+import React from 'react'
+import { EntryContent } from './EntryContent'
+import { EntryDate } from './EntryDate'
 
 interface EntryProps {
-    title: string;
-    id?: number;
-    date: Date;
-    nick: string;
-    parsedContent: any[];
-    isDraft?: boolean;
+    title: string
+    id?: number
+    date: Date
+    nick: string
+    parsedContent: any[]
+    isDraft?: boolean
 }
 
 export function Entry({ title, id, date, nick, parsedContent, isDraft = false }: EntryProps) {
@@ -43,5 +43,5 @@ export function Entry({ title, id, date, nick, parsedContent, isDraft = false }:
                 </span>
             </div>
         </div>
-    );
+    )
 }

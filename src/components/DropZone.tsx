@@ -1,53 +1,53 @@
-import { useState, useRef } from 'react';
-import { processFiles } from '../utils/backupfile.mjs';
+import { useState, useRef } from 'react'
+import { processFiles } from '../utils/backupfile.mjs'
 
 interface DropZoneProps {
-    id: string;
-    onFileProcessed: (xmlBody: string) => void;
-    isMini: boolean;
+    id: string
+    onFileProcessed: (xmlBody: string) => void
+    isMini: boolean
 }
 
 export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
-    const [isActive, setIsActive] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isActive, setIsActive] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const fileInputRef = useRef<HTMLInputElement>(null)
 
     const showError = (message: string) => {
-        setErrorMessage(`⚠️ ${message}`);
-        setTimeout(() => setIsActive(false), 500);
-        console.debug("showing error: %s", message);
-    };
+        setErrorMessage(`⚠️ ${message}`)
+        setTimeout(() => setIsActive(false), 500)
+        console.debug("showing error: %s", message)
+    }
 
     const handleDrop = (ev: React.DragEvent<HTMLLabelElement>) => {
-        console.debug("drop");
-        ev.preventDefault();
-        setIsActive(true);
+        console.debug("drop")
+        ev.preventDefault()
+        setIsActive(true)
         
-        const dt = ev.dataTransfer;
+        const dt = ev.dataTransfer
         if (dt !== null) {
-            processFiles(dt.files, onFileProcessed, showError);
+            processFiles(dt.files, onFileProcessed, showError)
         }
-    };
+    }
 
     const handleDragOver = (ev: React.DragEvent<HTMLLabelElement>) => {
-        ev.preventDefault();
-    };
+        ev.preventDefault()
+    }
 
     const handleDragEnter = (ev: React.DragEvent<HTMLLabelElement>) => {
-        console.debug("dragenter");
-        setIsActive(true);
-    };
+        console.debug("dragenter")
+        setIsActive(true)
+    }
 
     const handleDragLeave = (ev: React.DragEvent<HTMLLabelElement>) => {
-        console.debug("dragleave");
-        setIsActive(false);
-    };
+        console.debug("dragleave")
+        setIsActive(false)
+    }
 
     const handleFileInputChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
         if (ev.target.files) {
-            processFiles(ev.target.files, onFileProcessed, showError);
+            processFiles(ev.target.files, onFileProcessed, showError)
         }
-    };
+    }
 
     return (
         <>
@@ -74,5 +74,5 @@ export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
                 <div id="error">{errorMessage}</div>
             </label>
         </>
-    );
+    )
 }

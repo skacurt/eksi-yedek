@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { displayXml } from '../xml.mjs';
-import { BackupReader } from './components/BackupReader';
-import { DropZone } from './components/DropZone';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { version } from '../package.json';
+import React, { useState } from 'react'
+import { displayXml } from '../xml.mjs'
+import { BackupReader } from './components/BackupReader'
+import { DropZone } from './components/DropZone'
+import { ErrorBoundary } from './components/ErrorBoundary'
+import { version } from '../package.json'
 
 export function App() {
-    const [backupData, setBackupData] = useState<any>(null);
+    const [backupData, setBackupData] = useState<any>(null)
 
     const handleFileProcessed = (xmlBody: string) => {
-        displayXml(xmlBody, setBackupData);
-    };
+        displayXml(xmlBody, setBackupData)
+    }
 
     React.useEffect(() => {
         // Test mode
@@ -18,10 +18,10 @@ export function App() {
             fetch("ssg.xml")
                 .then(response => response.text())
                 .then(text => {
-                    displayXml(text, setBackupData);
-                });
+                    displayXml(text, setBackupData)
+                })
         }
-    }, []);
+    }, [])
 
     return (
         <>
@@ -49,5 +49,5 @@ export function App() {
                 <small>© 2024-2025</small>
             </footer>
         </>
-    );
+    )
 }

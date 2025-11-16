@@ -1,31 +1,31 @@
-import { BackupHeader } from './BackupHeader';
-import { Entry } from './Entry';
-import { DraftsSection } from './DraftsSection';
+import { BackupHeader } from './BackupHeader'
+import { Entry } from './Entry'
+import { DraftsSection } from './DraftsSection'
 
 interface BackupEntry {
-    title: string;
-    id: number;
-    date: Date;
-    parsedContent: any[];
+    title: string
+    id: number
+    date: Date
+    parsedContent: any[]
 }
 
 interface BackupData {
-    nick: string;
-    backupDate: Date;
-    entries?: BackupEntry[];
-    drafts?: any[];
+    nick: string
+    backupDate: Date
+    entries?: BackupEntry[]
+    drafts?: any[]
 }
 
 interface BackupReaderProps {
-    backupData: BackupData | null;
+    backupData: BackupData | null
 }
 
 export function BackupReader({ backupData }: BackupReaderProps) {
     if (!backupData) {
-        return null;
+        return null
     }
 
-    const { nick, backupDate, entries, drafts } = backupData;
+    const { nick, backupDate, entries, drafts } = backupData
 
     return (
         <div id="reader">
@@ -44,5 +44,5 @@ export function BackupReader({ backupData }: BackupReaderProps) {
             
             <DraftsSection drafts={drafts} nick={nick} />
         </div>
-    );
+    )
 }

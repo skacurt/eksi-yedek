@@ -1,19 +1,19 @@
-import { Entry } from './Entry';
+import { Entry } from './Entry'
 
 interface Draft {
-    title: string;
-    date: Date;
-    parsedContent: any[];
+    title: string
+    date: Date
+    parsedContent: any[]
 }
 
 interface DraftsSectionProps {
-    drafts?: Draft[];
-    nick: string;
+    drafts?: Draft[]
+    nick: string
 }
 
 export function DraftsSection({ drafts, nick }: DraftsSectionProps) {
     if (!drafts || drafts.length === 0) {
-        return null;
+        return null
     }
     
     return (
@@ -30,5 +30,5 @@ export function DraftsSection({ drafts, nick }: DraftsSectionProps) {
                 />
             ))}
         </>
-    );
+    )
 }

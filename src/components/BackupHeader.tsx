@@ -1,9 +1,9 @@
-import React from 'react';
-import { EntryDate } from './EntryDate';
+import React from 'react'
+import { EntryDate } from './EntryDate'
 
 interface BackupHeaderProps {
-    nick: string;
-    backupDate: Date;
+    nick: string
+    backupDate: Date
 }
 
 export function BackupHeader({ nick, backupDate }: BackupHeaderProps) {
@@ -13,5 +13,5 @@ export function BackupHeader({ nick, backupDate }: BackupHeaderProps) {
             <div title="yedek tarihi">📅<EntryDate date={backupDate} /></div>
             <hr />
         </>
-    );
+    )
 }
