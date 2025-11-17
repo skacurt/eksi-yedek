@@ -5,6 +5,14 @@ body {
     max-width: 600px;
 }
 
+button {
+    border: 1px outset;
+    border-radius: 5px;
+    background-color: #4040A0;
+    color: white;
+    padding: 5px 10px;
+}
+
 h3 {
     margin-top: 8px;
     margin-bottom: 8px;

@@ -49,6 +49,11 @@ export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
         }
     }
 
+    function handleButtonClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+        event.preventDefault()
+        fileInputRef.current?.click()
+    }
+
     return (
         <>
             <label 
@@ -62,7 +67,9 @@ export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
             >
                 <div id="instruction">
                     sözlük yedek ZIP ya da XML dosyanızı bu alana sürükleyip bırakın.
-                    olmadı buralara bi yerlere dokunun.
+                    <br/>
+                    <br/>
+                    <button onClick={handleButtonClick}>yok illa buraya basıcam</button>
                     <input 
                         id="fileinput" 
                         type="file" 
