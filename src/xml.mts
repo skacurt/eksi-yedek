@@ -1,4 +1,4 @@
-import { parse } from "./eksitext-2024.mjs"
+import { parse } from "../eksitext-2024.mjs"
 
 const xmlMimeType = "text/xml"
 

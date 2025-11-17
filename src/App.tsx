@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { displayXml } from '../xml.mjs'
+import { displayXml } from './xml.mts'
 import { BackupReader } from './components/BackupReader'
 import { DropZone } from './components/DropZone'
 import { ErrorBoundary } from './components/ErrorBoundary'
