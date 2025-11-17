@@ -13,6 +13,10 @@ button {
     padding: 5px 10px;
 }
 
+button:active {
+    border: 1px inset;
+}
+
 h3 {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -35,7 +39,6 @@ a {
 
 #reader {
     text-align: left;
-    margin: 20px;
     vertical-align: top;
 }
 
@@ -106,7 +109,6 @@ pre {
 }
 
 #instruction {    
-    pointer-events: none;
     padding: 10px;
     padding-top: 100px;
 }

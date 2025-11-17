@@ -18,7 +18,7 @@ export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
         console.debug("showing error: %s", message)
     }
 
-    const handleDrop = (ev: React.DragEvent<HTMLLabelElement>) => {
+    const handleDrop = (ev: React.DragEvent<HTMLDivElement>) => {
         console.debug("drop")
         ev.preventDefault()
         setIsActive(true)
@@ -29,16 +29,16 @@ export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
         }
     }
 
-    const handleDragOver = (ev: React.DragEvent<HTMLLabelElement>) => {
+    const handleDragOver = (ev: React.DragEvent<HTMLDivElement>) => {
         ev.preventDefault()
     }
 
-    const handleDragEnter = (ev: React.DragEvent<HTMLLabelElement>) => {
+    const handleDragEnter = (ev: React.DragEvent<HTMLDivElement>) => {
         console.debug("dragenter")
         setIsActive(true)
     }
 
-    const handleDragLeave = (ev: React.DragEvent<HTMLLabelElement>) => {
+    const handleDragLeave = (ev: React.DragEvent<HTMLDivElement>) => {
         console.debug("dragleave")
         setIsActive(false)
     }
@@ -50,16 +50,14 @@ export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
     }
 
     function handleButtonClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
-        event.preventDefault()
         fileInputRef.current?.click()
     }
 
     return (
         <>
-            <label 
+            <div 
                 id={id} 
                 className={`dropzone ${isMini ? 'mini' : 'expanded'} ${isActive ? 'active' : ''}`}
-                htmlFor="fileinput"
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragEnter={handleDragEnter}
@@ -79,7 +77,7 @@ export function DropZone({ id, onFileProcessed, isMini }: DropZoneProps) {
                     <br /><br />
                 </div>
                 <div id="error">{errorMessage}</div>
-            </label>
+            </div>
         </>
     )
 }

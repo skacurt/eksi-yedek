@@ -1,12 +1,11 @@
 {
   "type": "module",
-  "version": "0.5.2 beta",
+  "version": "0.5.3 beta",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest",
-    "test:run": "vitest run",
+    "test": "vitest run",
     "test:watch": "vitest --watch",
     "build-parser": "peggy --dts --format es -o eksitext-2024.mjs eksitext-2024.peggy"
   },
