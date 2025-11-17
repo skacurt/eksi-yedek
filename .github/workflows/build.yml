@@ -32,7 +32,7 @@ jobs:
       run: npm run build-parser
     
     - name: Run tests
-      run: npm run test:run
+      run: npm run test
     
     - name: Build project
       run: npm run build
