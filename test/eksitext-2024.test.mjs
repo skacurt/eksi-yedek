@@ -41,6 +41,11 @@ describe('Ekşi Sözlük Parser', () => {
       expected: [{ type: 'url', url: 'https://example.com' }]
     },
     {
+      name: 'simple URL (http)',
+      input: 'http://example.com',
+      expected: [{ type: 'url', url: 'http://example.com' }]
+    },
+    {
       name: 'named URL',
       input: '[https://example.com Example]',
       expected: ['[', { type: 'url', url: 'https://example.com' }, ' Example]']
