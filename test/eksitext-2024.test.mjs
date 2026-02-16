@@ -36,7 +36,7 @@ describe('Ekşi Sözlük Parser', () => {
       expected: [{ type: 'abkz', text: null, query: 'hidden' }]
     },
     {
-      name: 'simple URL',
+      name: 'simple URL (https)',
       input: 'https://example.com',
       expected: [{ type: 'url', url: 'https://example.com' }]
     },
