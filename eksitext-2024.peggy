@@ -59,7 +59,7 @@ NICK_CHAR = ASCII_LETTER / DIGIT
 
 NEWLINE = [\n]
   
-scheme = "http" "s"? "://"
+scheme = "http://" / "https://" / "ftp://"
 
 host = [a-z-0-9.]+
 
