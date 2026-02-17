@@ -51,6 +51,11 @@ describe('Ekşi Sözlük Parser', () => {
       expected: [{ type: 'url', url: 'ftp://example.com' }]
     },
     {
+      name: 'URL with port',
+      input: 'http://example.com:8080',
+      expected: [{ type: 'url', url: 'http://example.com:8080' }]
+    },
+    {
       name: 'named URL',
       input: '[https://example.com Example]',
       expected: ['[', { type: 'url', url: 'https://example.com' }, ' Example]']
