@@ -65,7 +65,7 @@ host = [a-z-0-9.]+
 
 port = ":" [0-9]|1..5|
 
-path = "/" [^?/]* path*
+path = "/" [^?/\x20]* path*
 
 url_query = "?" [^\x20\]]+
 
