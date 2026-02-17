@@ -63,7 +63,7 @@ scheme = "http://" / "https://" / "ftp://"
 
 host = [a-z-0-9.]+
 
-port = ":[0-9]{1,5}"
+port = ":" [0-9]{1,5}
 
 path = "/" [^?/]* path*
 
