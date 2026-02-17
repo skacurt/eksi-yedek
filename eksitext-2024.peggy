@@ -15,7 +15,7 @@ directive = bkz
   
 gbkz = "`" SPACE* query:$query SPACE* "`" { return { type: "gbkz", query: query } }
 
-named_url = "[" url:url SPACE+ title:plain_text "]"
+named_url = "[" url:url SPACE+ title:$(!"]" .)+ "]" { return { type: "named_url", url: url.url, title: title} }
 
 url = url:$(scheme host port? path? url_query?) { return { type: "url", url } }
 

@@ -58,7 +58,7 @@ describe('Ekşi Sözlük Parser', () => {
     {
       name: 'named URL',
       input: '[https://example.com Example]',
-      expected: ['[', { type: 'url', url: 'https://example.com' }, ' Example]']
+      expected: [{ type: 'named_url', url: 'https://example.com', title: 'Example' }]
     },
     {
       name: 'paragraph break',
@@ -78,9 +78,9 @@ describe('Ekşi Sözlük Parser', () => {
         { type: 'bkz', query: 'world' },
         '. ',
         { type: 'gbkz', query: 'gbkz' },
-        ' and [',
-        { type: 'url', url: 'https://example.com' },
-        ' Example].',
+        ' and ',
+        { type: 'named_url', url: 'https://example.com', title: 'Example' },
+        '.',
         { type: 'paragraph_break' },
         'New paragraph.'
       ]
