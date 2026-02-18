@@ -36,6 +36,11 @@ describe('Ekşi Sözlük Parser', () => {
       expected: [{ type: 'abkz', text: null, query: 'hidden' }]
     },
     {
+      name: 'direct entry query',
+      input: '#123',
+      expected: [{ type: 'entry_query', entry_id: '123' }]
+    },
+    {
       name: 'simple URL (https)',
       input: 'https://example.com',
       expected: [{ type: 'url', url: 'https://example.com' }]
@@ -72,7 +77,7 @@ describe('Ekşi Sözlük Parser', () => {
     },
     {
       name: 'mixed content',
-      input: 'Hello (bkz: world). `gbkz` and [https://example.com Example].\n\nNew paragraph.',
+      input: 'Hello (bkz: world). `gbkz` and [https://example.com Example] and #123.\n\nNew paragraph.',
       expected: [
         'Hello ',
         { type: 'bkz', query: 'world' },
@@ -80,6 +85,8 @@ describe('Ekşi Sözlük Parser', () => {
         { type: 'gbkz', query: 'gbkz' },
         ' and ',
         { type: 'named_url', url: 'https://example.com', title: 'Example' },
+        ' and ',
+        { type: 'entry_query', entry_id: '123' },
         '.',
         { type: 'paragraph_break' },
         'New paragraph.'

@@ -9,6 +9,7 @@ directive = bkz
   / gbkz
   / abkz
   / named_url
+  / entry_query
   / url
   / paragraph_break
   / line_break
@@ -31,7 +32,7 @@ query = $(entry_query / nick_query / title:title ("/" (nick_query / entry_query 
 
 nick_query = "@" nick:$nick
 
-entry_query = "#" entry_id:$entry_id
+entry_query = "#" entry_id:$entry_id { return {type: "entry_query", entry_id: entry_id} }
 
 nick = NICK_CHAR+ (SPACE NICK_CHAR+)*
 
