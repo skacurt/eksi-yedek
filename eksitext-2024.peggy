@@ -9,6 +9,7 @@ directive = bkz
   / gbkz
   / abkz
   / named_url
+  / unnamed_url
   / entry_query
   / url
   / paragraph_break
@@ -17,6 +18,8 @@ directive = bkz
 gbkz = "`" SPACE* query:$query SPACE* "`" { return { type: "gbkz", query: query } }
 
 named_url = "[" url:url SPACE+ title:$(!"]" .)+ "]" { return { type: "named_url", url: url.url, title: title} }
+
+unnamed_url = "[" url:url "]" { return { type: "url", url: url.url} }
 
 url = url:$(scheme host port? path? url_query?) { return { type: "url", url } }
 
