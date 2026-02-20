@@ -1,7 +1,7 @@
 import React from 'react'
 
 type ContentPart = string | string[] | {
-    type: 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url' | 'entry_query'
+    type: 'ara' | 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url' | 'entry_query'
     query?: string
     text?: string
     url?: string
@@ -27,6 +27,15 @@ export function EntryContent({ parts }: EntryContentProps) {
                 }
 
                 switch (part.type) {
+                    case 'ara':
+                        return (
+                            <React.Fragment key={index}>
+                                (ara: <a href={`https://eksisozluk.com/basliklar/ara?searchform.keywords=${encodeURIComponent(part.query!)}`}>
+                                    {part.query}
+                                </a>)
+                            </React.Fragment>
+                        )
+
                     case 'gbkz':
                         return (
                             <a key={index} href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>

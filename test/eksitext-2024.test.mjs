@@ -6,6 +6,16 @@ import { parse } from '../eksitext-2024.mjs';
 describe('Ekşi Sözlük Parser', () => {
   const testCases = [
     {
+      name: 'simple ara',
+      input: '(ara: query)',
+      expected: [{ type: 'ara', query: 'query' }]
+    },    
+    {
+      name: 'wildcard ara',
+      input: '(ara: at av* si*)',
+      expected: [{ type: 'ara', query: 'at av* si*' }]
+    },
+    {
       name: 'simple gbkz',
       input: '`query`',
       expected: [{ type: 'gbkz', query: 'query' }]

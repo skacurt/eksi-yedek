@@ -5,7 +5,8 @@
 
 eksi_text = (directive / $plain_text)+
   
-directive = bkz
+directive = ara
+  / bkz
   / gbkz
   / abkz
   / named_url
@@ -22,6 +23,8 @@ named_url = "[" url:url SPACE+ title:$(!"]" .)+ "]" { return { type: "named_url"
 unnamed_url = "[" url:url "]" { return { type: "url", url: url.url} }
 
 url = url:$(scheme host port? path? url_query?) { return { type: "url", url } }
+
+ara = "(ara" [:;.] SPACE* query:$(!"\x29" .)+ ")" { return { type: "ara", query: query } }
 
 bkz = "(bkz" [\':;.] SPACE* query:$query ")" { return { type: "bkz", query: query } }
 
