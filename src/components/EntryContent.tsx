@@ -1,11 +1,12 @@
 import React from 'react'
 
 type ContentPart = string | string[] | {
-    type: 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url'
+    type: 'ara' | 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url' | 'entry_query'
     query?: string
     text?: string
     url?: string
     title?: string
+    entry_id?: string
 }
 
 interface EntryContentProps {
@@ -26,6 +27,15 @@ export function EntryContent({ parts }: EntryContentProps) {
                 }
 
                 switch (part.type) {
+                    case 'ara':
+                        return (
+                            <React.Fragment key={index}>
+                                (ara: <a href={`https://eksisozluk.com/basliklar/ara?searchform.keywords=${encodeURIComponent(part.query!)}`}>
+                                    {part.query}
+                                </a>)
+                            </React.Fragment>
+                        )
+
                     case 'gbkz':
                         return (
                             <a key={index} href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
@@ -73,6 +83,13 @@ export function EntryContent({ parts }: EntryContentProps) {
                         return (
                             <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
                                 {part.title}
+                            </a>
+                        )
+
+                    case 'entry_query':
+                        return (
+                            <a key={index} href={`https://eksisozluk.com/entry/${encodeURIComponent(part.entry_id!)}`} target="_blank" rel="noopener noreferrer">
+                                #{part.entry_id}
                             </a>
                         )
                     

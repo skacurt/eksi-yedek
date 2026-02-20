@@ -6,6 +6,16 @@ import { parse } from '../eksitext-2024.mjs';
 describe('Ekşi Sözlük Parser', () => {
   const testCases = [
     {
+      name: 'simple ara',
+      input: '(ara: query)',
+      expected: [{ type: 'ara', query: 'query' }]
+    },    
+    {
+      name: 'wildcard ara',
+      input: '(ara: at av* si*)',
+      expected: [{ type: 'ara', query: 'at av* si*' }]
+    },
+    {
       name: 'simple gbkz',
       input: '`query`',
       expected: [{ type: 'gbkz', query: 'query' }]
@@ -36,14 +46,39 @@ describe('Ekşi Sözlük Parser', () => {
       expected: [{ type: 'abkz', text: null, query: 'hidden' }]
     },
     {
-      name: 'simple URL',
+      name: 'direct entry query',
+      input: '#123',
+      expected: [{ type: 'entry_query', entry_id: '123' }]
+    },
+    {
+      name: 'simple URL (https)',
       input: 'https://example.com',
       expected: [{ type: 'url', url: 'https://example.com' }]
     },
     {
+      name: 'simple URL (http)',
+      input: 'http://example.com',
+      expected: [{ type: 'url', url: 'http://example.com' }]
+    },
+    {
+      name: 'simple URL (ftp)',
+      input: 'ftp://example.com',
+      expected: [{ type: 'url', url: 'ftp://example.com' }]
+    },
+    {
+      name: 'URL with port',
+      input: 'http://example.com:8080',
+      expected: [{ type: 'url', url: 'http://example.com:8080' }]
+    },
+    {
       name: 'named URL',
       input: '[https://example.com Example]',
-      expected: ['[', { type: 'url', url: 'https://example.com' }, ' Example]']
+      expected: [{ type: 'named_url', url: 'https://example.com', title: 'Example' }]
+    },
+    {
+      name: 'unnamed URL',
+      input: '[https://example.com]',
+      expected: [{ type: 'url', url: 'https://example.com' }]
     },
     {
       name: 'paragraph break',
@@ -57,15 +92,19 @@ describe('Ekşi Sözlük Parser', () => {
     },
     {
       name: 'mixed content',
-      input: 'Hello (bkz: world). `gbkz` and [https://example.com Example].\n\nNew paragraph.',
+      input: 'Hello (bkz: world). `gbkz` and [https://example.com Example] and [https://unnamed-url.tld] and #123.\n\nNew paragraph.',
       expected: [
         'Hello ',
         { type: 'bkz', query: 'world' },
         '. ',
         { type: 'gbkz', query: 'gbkz' },
-        ' and [',
-        { type: 'url', url: 'https://example.com' },
-        ' Example].',
+        ' and ',
+        { type: 'named_url', url: 'https://example.com', title: 'Example' },
+        ' and ',
+        { type: 'url', url: 'https://unnamed-url.tld' },
+        ' and ',
+        { type: 'entry_query', entry_id: '123' },
+        '.',
         { type: 'paragraph_break' },
         'New paragraph.'
       ]

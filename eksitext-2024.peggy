@@ -5,19 +5,26 @@
 
 eksi_text = (directive / $plain_text)+
   
-directive = bkz
+directive = ara
+  / bkz
   / gbkz
   / abkz
   / named_url
+  / unnamed_url
+  / entry_query
   / url
   / paragraph_break
   / line_break
   
 gbkz = "`" SPACE* query:$query SPACE* "`" { return { type: "gbkz", query: query } }
 
-named_url = "[" url:url SPACE+ title:plain_text "]"
+named_url = "[" url:url SPACE+ title:$(!"]" .)+ "]" { return { type: "named_url", url: url.url, title: title} }
+
+unnamed_url = "[" url:url "]" { return { type: "url", url: url.url} }
 
 url = url:$(scheme host port? path? url_query?) { return { type: "url", url } }
+
+ara = "(ara" [:;.] SPACE* query:$(!"\x29" .)+ ")" { return { type: "ara", query: query } }
 
 bkz = "(bkz" [\':;.] SPACE* query:$query ")" { return { type: "bkz", query: query } }
 
@@ -31,7 +38,7 @@ query = $(entry_query / nick_query / title:title ("/" (nick_query / entry_query 
 
 nick_query = "@" nick:$nick
 
-entry_query = "#" entry_id:$entry_id
+entry_query = "#" entry_id:$entry_id { return {type: "entry_query", entry_id: entry_id} }
 
 nick = NICK_CHAR+ (SPACE NICK_CHAR+)*
 
@@ -53,20 +60,20 @@ ASCII_LETTER = [a-z]
 
 TURKISH_LETTER = [şğüöçıŞĞÜÖÇİ]
 
-TITLE_CHAR = ASCII_LETTER / TURKISH_LETTER / DIGIT
+TITLE_CHAR = ASCII_LETTER / TURKISH_LETTER / DIGIT / "'" / "-" / "."
 
 NICK_CHAR = ASCII_LETTER / DIGIT
 
 NEWLINE = [\n]
   
-scheme = "http" "s"? "://"
+scheme = "http://" / "https://" / "ftp://"
 
 host = [a-z-0-9.]+
 
-port = ":[0-9]{1,5}"
+port = ":" [0-9]|1..5|
 
-path = "/" [^?/]* path*
+path = "/" [^?/\x20\n\]]* path*
 
-url_query = "?" [^\x0020\]]+
+url_query = "?" [^\x20\n\]]+
 
 plain_text = (!directive .)+
