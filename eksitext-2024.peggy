@@ -60,7 +60,7 @@ ASCII_LETTER = [a-z]
 
 TURKISH_LETTER = [şğüöçıŞĞÜÖÇİ]
 
-TITLE_CHAR = ASCII_LETTER / TURKISH_LETTER / DIGIT / "'" / "-" / "."
+TITLE_CHAR = ASCII_LETTER / TURKISH_LETTER / DIGIT / [-._%+€/=^&$#']
 
 NICK_CHAR = ASCII_LETTER / DIGIT
 
