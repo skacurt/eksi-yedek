@@ -1,7 +1,7 @@
 import React from 'react'
 
 type ContentPart = string | string[] | {
-    type: 'ara' | 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url' | 'entry_query'
+    type: 'ara' | 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url' | 'entry_query' | 'raw_text'
     query?: string
     text?: string
     url?: string
@@ -93,6 +93,9 @@ export function EntryContent({ parts }: EntryContentProps) {
                             </a>
                         )
                     
+                    case 'raw_text': 
+                        return part.text
+                        
                     default:
                         console.error('unknown part type', (part as any).type)
                         return null

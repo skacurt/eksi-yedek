@@ -109,6 +109,6 @@ function parseEksiMarkup(text: string): ParsedContent[] {
     }
     catch (err) {
         console.error("couldn't parse entry text: %s", text, err)
-        return [{ type: 'text', content: text }] // return as plain text if parsing fails
+        return [{ type: 'raw_text', text: text }] // return as plain text if parsing fails
     }
 }
