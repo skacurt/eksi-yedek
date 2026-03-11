@@ -36,6 +36,81 @@ describe('Ekşi Sözlük Parser', () => {
       expected: [{ type: 'bkz', query: 'query with spaces' }]
     },
     {
+      name: 'bkz with "."',
+      input: '(bkz: garantibbva.com.tr)',
+      expected: [{ type: 'bkz', query: 'garantibbva.com.tr' }]
+    },
+    {
+      name: 'bkz with "\'"',
+      input: '(bkz: beşiktaş\'ın şampiyon olacağı kesin tarih)',
+      expected: [{ type: 'bkz', query: 'beşiktaş\'ın şampiyon olacağı kesin tarih' }]
+    },
+    {
+      name: 'bkz with "-"',
+      input: '(bkz: covid-19)',
+      expected: [{ type: 'bkz', query: 'covid-19' }]
+    },
+    {
+      name: 'bkz with "_"',
+      input: '(bkz: dondurma_id)',
+      expected: [{ type: 'bkz', query: 'dondurma_id' }]
+    },
+    {
+      name: 'bkz with "%"',
+      input: '(bkz: 21 aralık 2022 mtv zammının %61 5 olması)',
+      expected: [{ type: 'bkz', query: '21 aralık 2022 mtv zammının %61 5 olması' }]
+    },
+    {
+      name: 'bkz with "+"',
+      input: '(bkz: sandisk sansa clip+)',
+      expected: [{ type: 'bkz', query: 'sandisk sansa clip+' }]
+    },
+    {
+      name: 'bkz with "€"',
+      input: '(bkz: 70 milyon € harcayıp kupayı gs\'ye kaybetmek)',
+      expected: [{ type: 'bkz', query: '70 milyon € harcayıp kupayı gs\'ye kaybetmek' }]
+    },
+    {
+      name: 'bkz with "/"',
+      input: '(bkz: maaş/yapılan iş oranı en yüksek meslek)',
+      expected: [{ type: 'bkz', query: 'maaş/yapılan iş oranı en yüksek meslek' }]
+    },
+    {
+      name: 'bkz with "="',
+      input: '(bkz: sen beni güldürdün x de seni güldürsün x=allah)',
+      expected: [{ type: 'bkz', query: 'sen beni güldürdün x de seni güldürsün x=allah' }]
+    },
+    {
+      name: 'bkz with "("',
+      input: '(bkz: gibi (dizi))',
+      expected: [{ type: 'bkz', query: 'gibi (dizi)' }]
+    },
+    {
+      name: 'bkz with ")"',
+      input: '(bkz: gibi (dizi))',
+      expected: [{ type: 'bkz', query: 'gibi (dizi)' }]
+    },
+    {
+      name: 'bkz with "^"',
+      input: '(bkz: 10^10^10^56 yıl sonra evrenin resetlenecek olması)',
+      expected: [{ type: 'bkz', query: '10^10^10^56 yıl sonra evrenin resetlenecek olması' }]
+    },
+    {
+      name: 'bkz with "&"',
+      input: '(bkz: sight & sound\'a göre 2023\'ün en iyi 50 filmi)',
+      expected: [{ type: 'bkz', query: 'sight & sound\'a göre 2023\'ün en iyi 50 filmi' }]
+    },
+    {
+      name: 'bkz with "$"',
+      input: '(bkz: gri pasaport+$128 milyar+dezenfektan+pudra)',
+      expected: [{ type: 'bkz', query: 'gri pasaport+$128 milyar+dezenfektan+pudra' }]
+    },
+    {
+      name: 'bkz with "#"',
+      input: '(bkz: #melihgokcektimarhaneye)',
+      expected: [{ type: 'bkz', query: '#melihgokcektimarhaneye' }]
+    },
+    {
       name: 'abkz with visible and hidden parts',
       input: '`visible:hidden`',
       expected: [{ type: 'abkz', text: 'visible', query: 'hidden' }]
