@@ -1,7 +1,5 @@
 import { parse } from "../eksitext-2024.mjs"
 
-const xmlMimeType = "text/xml"
-
 export interface ParsedContent {
     type: string
     [key: string]: any
@@ -55,9 +53,16 @@ function getNodes(xml: XMLDocument, xpath: string): Node[] {
  */
 export function displayXml(xmlBody: string, renderCallback: RenderCallback): void {
     const parser = new DOMParser()
-    const xml = parser.parseFromString(xmlBody, xmlMimeType)
 
-    const backupNode = xml.documentElement
+    // text/html enables the error tolerant HTML parser 
+    const xml = parser.parseFromString(xmlBody, 'text/html') 
+
+    // the XML root element is put inside html+body by HTML parser - let's extract it
+    const backupNode = xml.documentElement.querySelector("html > body > backup")
+    if (!backupNode) {
+        throw new Error("yine bi parsing hataları öf")
+    }
+
     const nick = backupNode.getAttribute('nick')!
     const backupDate = new Date(backupNode.getAttribute('backupdate')!)
 
