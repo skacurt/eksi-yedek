@@ -17,14 +17,14 @@ export function BackupReader({ backupData }: BackupReaderProps) {
     const [searchResetKey, setSearchResetKey] = useState(0)
     const [deferredQuery, setDeferredQuery] = useState('')
 
-    if (!backupData) {
-        return null
-    }
-
     useEffect(() => {
         setDeferredQuery('')
         setSearchResetKey(k => k + 1)
     }, [backupData])
+
+    if (!backupData) {
+        return null
+    }
 
     const { nick, backupDate, entries, drafts } = backupData        
 
