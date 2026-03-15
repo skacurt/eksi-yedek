@@ -11,7 +11,7 @@ kullanmak için: [kod.ssg.dev/eksi-yedek](https://kod.ssg.dev/eksi-yedek)
 - [X] PWA
 - [X] mobil cihazlarda sürükle bırak alternatifi dosya yükleme
   - [X] bu buton olsa daha iyi
-- [ ] arama
+- [X] arama
 - [ ] büyük yedeklerin kolay takip edilebilmesi için infinite scroll
 - [ ] "başka yedeğe bak" butonu
 - [ ] testler
