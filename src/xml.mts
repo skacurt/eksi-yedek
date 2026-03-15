@@ -10,12 +10,14 @@ export interface BackupEntry {
     id: number
     date: Date
     parsedContent: ParsedContent[]
+    rawText: string
 }
 
 export interface BackupDraft {
     title: string
     date: Date
     parsedContent: ParsedContent[]
+    rawText: string
 }
 
 export interface BackupData {
@@ -70,12 +72,14 @@ export function displayXml(xmlBody: string, renderCallback: RenderCallback): voi
     const entryNodes = getNodes(xml, "//entry")
     const entries: BackupEntry[] = entryNodes.map(node => {
         const element = node as Element
-        const parsedContent = parseEksiMarkup(element.textContent!)
+        const rawText = element.textContent!
+        const parsedContent = parseEksiMarkup(rawText)
         return {
             title: element.getAttribute('title')!,
             id: Number(element.getAttribute('id')),
             date: new Date(element.getAttribute('date')!),
-            parsedContent
+            parsedContent,
+            rawText
         }
     })
 
@@ -83,13 +87,15 @@ export function displayXml(xmlBody: string, renderCallback: RenderCallback): voi
     const draftNodes = getNodes(xml, "//draft")
     const drafts: BackupDraft[] = draftNodes.map(node => {
         const element = node as Element
-        const parsedContent = parseEksiMarkup(element.textContent!)
+        const rawText = element.textContent!
+        const parsedContent = parseEksiMarkup(rawText)
         const dateStr = element.getAttribute('date')!
         const title = element.getAttribute('title')!
         return {
-            title: title,
+            title,
             date: new Date(dateStr),
-            parsedContent
+            parsedContent,
+            rawText
         }
     })
 

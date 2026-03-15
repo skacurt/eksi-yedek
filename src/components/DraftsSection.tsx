@@ -9,9 +9,10 @@ interface Draft {
 interface DraftsSectionProps {
     drafts?: Draft[]
     nick: string
+    searchQuery?: string
 }
 
-export function DraftsSection({ drafts, nick }: DraftsSectionProps) {
+export function DraftsSection({ drafts, nick, searchQuery = '' }: DraftsSectionProps) {
     if (!drafts || drafts.length === 0) {
         return null
     }
@@ -27,6 +28,7 @@ export function DraftsSection({ drafts, nick }: DraftsSectionProps) {
                     nick={nick}
                     parsedContent={draft.parsedContent}
                     isDraft={true}
+                    searchQuery={searchQuery}
                 />
             ))}
         </>

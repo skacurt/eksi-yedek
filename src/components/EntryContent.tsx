@@ -1,4 +1,5 @@
 import React from 'react'
+import { highlightText } from '../utils/highlight'
 
 type ContentPart = string | string[] | {
     type: 'ara' | 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url' | 'entry_query' | 'raw_text'
@@ -11,19 +12,21 @@ type ContentPart = string | string[] | {
 
 interface EntryContentProps {
     parts: ContentPart[]
+    searchQuery?: string
 }
 
-export function EntryContent({ parts }: EntryContentProps) {
+export function EntryContent({ parts, searchQuery = '' }: EntryContentProps) {
+    const hl = (text: string) => highlightText(text, searchQuery)
     return (
         <>
             {parts.map((part, index) => {
                 if (typeof part === 'string') {
-                    return <React.Fragment key={index}>{part}</React.Fragment>
+                    return <React.Fragment key={index}>{hl(part)}</React.Fragment>
                 }
                 
                 // Handle array format from named_url parser (returns array, not object)
                 if (Array.isArray(part)) {
-                    return <React.Fragment key={index}>{part.join('')}</React.Fragment>
+                    return <React.Fragment key={index}>{hl(part.join(''))}</React.Fragment>
                 }
 
                 switch (part.type) {
@@ -31,7 +34,7 @@ export function EntryContent({ parts }: EntryContentProps) {
                         return (
                             <React.Fragment key={index}>
                                 (ara: <a href={`https://eksisozluk.com/basliklar/ara?searchform.keywords=${encodeURIComponent(part.query!)}`}>
-                                    {part.query}
+                                    {hl(part.query!)}
                                 </a>)
                             </React.Fragment>
                         )
@@ -39,7 +42,7 @@ export function EntryContent({ parts }: EntryContentProps) {
                     case 'gbkz':
                         return (
                             <a key={index} href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
-                                {part.query}
+                                {hl(part.query!)}
                             </a>
                         )
                     
@@ -47,7 +50,7 @@ export function EntryContent({ parts }: EntryContentProps) {
                         return (
                             <React.Fragment key={index}>
                                 (bkz: <a href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
-                                    {part.query}
+                                    {hl(part.query!)}
                                 </a>)
                             </React.Fragment>
                         )
@@ -55,9 +58,9 @@ export function EntryContent({ parts }: EntryContentProps) {
                     case 'abkz':
                         return (
                             <React.Fragment key={index}>
-                                {part.text}
+                                {hl(part.text!)}
                                 <sup>(<a href={`https://eksisozluk.com/?q=${encodeURIComponent(part.query!)}`}>
-                                    {part.query}
+                                    {hl(part.query!)}
                                 </a>)</sup>
                             </React.Fragment>
                         )
@@ -75,14 +78,14 @@ export function EntryContent({ parts }: EntryContentProps) {
                     case 'url':
                         return (
                             <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
-                                {part.url}
+                                {hl(part.url!)}
                             </a>
                         )
                     
                     case 'named_url':
                         return (
                             <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
-                                {part.title}
+                                {hl(part.title!)}
                             </a>
                         )
 
@@ -94,7 +97,7 @@ export function EntryContent({ parts }: EntryContentProps) {
                         )
                     
                     case 'raw_text': 
-                        return part.text
+                        return <React.Fragment key={index}>{hl(part.text!)}</React.Fragment>
                         
                     default:
                         console.error('unknown part type', (part as any).type)

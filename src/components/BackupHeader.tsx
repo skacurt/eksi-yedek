@@ -11,7 +11,6 @@ export function BackupHeader({ nick, backupDate }: BackupHeaderProps) {
         <>
             <h2 className="backup-owner">{nick}</h2>
             <div title="yedek tarihi">📅<EntryDate date={backupDate} /></div>
-            <hr />
         </>
     )
 }
