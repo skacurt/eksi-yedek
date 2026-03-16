@@ -46,7 +46,7 @@ export function App() {
                     adres satırındaki "uygulamayı kur" seçeneğini kullanabilirsiniz. her şeyi düşündük olm her şeyi)</small>
                 <br/>
                 <br/>
-                <small>© 2024-2025</small>
+                <small>© 2024-2026</small>
             </footer>
         </>
     )
