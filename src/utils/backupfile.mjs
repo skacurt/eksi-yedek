@@ -21,12 +21,13 @@ export function processFiles(files, onFileProcessed, showError) {
     if (ext === "zip") {
         JSZip.loadAsync(file)
             .then((zip) => {
-                zip.forEach((relativePath, file) => {
-                    if (relativePath.endsWith(".xml")) {
-                        file.async("string")
-                            .then((str) => onFileProcessed(str));
-                    }
-                });
+                // pick the first xml file available
+                const xmlFile = Object.values(zip.files).find(f => f.name.endsWith(".xml"));
+                if (!xmlFile) {
+                    showError("bu zip bi tuhaf");
+                    return;
+                }
+                xmlFile.async("string").then((str) => onFileProcessed(str));
             });
         return;
     }
