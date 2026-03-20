@@ -1,8 +1,8 @@
 name: Build
 
 on:
-  push:
-    branches: [ main ]
+  release:
+    types: [ published ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -38,11 +38,13 @@ jobs:
       run: npm run build
     
     - name: Upload build artifacts
+      if: github.event_name != 'pull_request'
       uses: actions/upload-pages-artifact@v3
       with:
         path: dist/
 
   deploy:
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
