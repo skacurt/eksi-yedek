@@ -59,7 +59,7 @@ footer {
 }
 
 .expanded {
-    height: 250px;
+    min-height: 250px;
     visibility: visible;
     transition: height 1s 0s, visibility 1s 0s;
 }
