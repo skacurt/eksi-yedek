@@ -29,6 +29,7 @@ export function SearchBox({ onQueryChange }: SearchBoxProps) {
             type="search"
             placeholder="ara..."
             ref={inputRef}
+            autoFocus
             onChange={handleChange}
         />
     )
