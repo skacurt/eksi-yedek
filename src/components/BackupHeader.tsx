@@ -1,4 +1,3 @@
-import React from 'react'
 import { EntryDate } from './EntryDate'
 
 interface BackupHeaderProps {

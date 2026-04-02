@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BackupEntry, BackupData } from '../xml.mts'
+import { BackupData } from '../xml.mts'
 import { BackupHeader } from './BackupHeader'
 import { SearchBox } from './SearchBox'
 import { Entry } from './Entry'

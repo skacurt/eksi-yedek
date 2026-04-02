@@ -1,4 +1,3 @@
-import React from 'react'
 import { EntryContent } from './EntryContent'
 import { EntryDate } from './EntryDate'
 import { highlightText } from '../utils/highlight'
