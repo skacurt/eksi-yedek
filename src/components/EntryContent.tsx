@@ -1,5 +1,6 @@
 import React from 'react'
 import { highlightText } from '../utils/highlight'
+import { shortenUrlDisplay } from '../utils/shorten'
 
 type ContentPart = string | string[] | {
     type: 'ara' | 'gbkz' | 'bkz' | 'abkz' | 'paragraph_break' | 'line_break' | 'url' | 'named_url' | 'entry_query' | 'raw_text'
@@ -77,8 +78,8 @@ export function EntryContent({ parts, searchQuery = '' }: EntryContentProps) {
                     
                     case 'url':
                         return (
-                            <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer">
-                                {hl(part.url!)}
+                            <a key={index} href={encodeURI(part.url!)} target="_blank" rel="noopener noreferrer" title={part.url!}>
+                                {hl(shortenUrlDisplay(part.url!))}
                             </a>
                         )
                     
@@ -92,7 +93,7 @@ export function EntryContent({ parts, searchQuery = '' }: EntryContentProps) {
                     case 'entry_query':
                         return (
                             <a key={index} href={`https://eksisozluk.com/entry/${encodeURIComponent(part.entry_id!)}`} target="_blank" rel="noopener noreferrer">
-                                #{part.entry_id}
+                                {hl(`#${part.entry_id}`)}
                             </a>
                         )
                     
